@@ -43,7 +43,7 @@ function App() {
                 show_type: 'all'
             },
             headers: {
-                'X-RapidAPI-Key': process.env.REACT_APP_X_RAPIDAPI_KEY,
+                'X-RapidAPI-Key': import.meta.env.VITE_X_RAPIDAPI_KEY,
                 'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com'
             }
         };
@@ -112,7 +112,7 @@ function App() {
     return (
         <>
             <div className="flex flex-col items-center w-screen pt-12 mb-12 shadow-lg bg-gradient-to-b from-slate-50 via-slate-50 to-slate-200">
-                <h1 className="font-bold text-transparent bg-clip-text text-6xl mb-12 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">Where
+                <h1 className="font-bold text-center text-transparent bg-clip-text text-6xl mb-12 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">Where
                     to Stream</h1>
                 <SearchBar searchFunction={fillTitlesWithNewData}/>
             </div>
