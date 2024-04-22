@@ -50,22 +50,62 @@ function App() {
 
         try {
             const {data} = await axios.request(request);
-            const titles: Title[] = data.result.map((result: Result) => {
+            const titlesPromises = data.result.map(async (result: Result) => {
                 const streamingServices = Object.values(result.streamingInfo).flat();
                 const subscriptionServices = streamingServices.filter(info => info.streamingType === 'subscription');
                 const availableOn = Array.from(new Set(subscriptionServices.map(info => info.service)));
-                return {
-                    title: result.title,
-                    year: result.firstAirYear || result.year,
-                    imdbID: result.imdbId,
-                    availableOn: availableOn,
-                };
+
+                try {
+                    const poster = await fetchPosters(result.imdbId);
+                    return {
+                        title: result.title,
+                        year: result.firstAirYear || result.year,
+                        imdbID: result.imdbId,
+                        availableOn: availableOn,
+                        poster: poster
+                    };
+                } catch (error) {
+                    console.error(error);
+                    return {
+                        title: result.title,
+                        year: result.firstAirYear || result.year,
+                        imdbID: result.imdbId,
+                        availableOn: availableOn,
+                        poster: ''
+                    };
+                }
             });
 
-            setFoundTitles(titles);
-            console.log(titles);
+            try {
+                const titles = await Promise.all(titlesPromises);
+                setFoundTitles(titles);
+                console.log(titles);
+            } catch (error) {
+                console.error(error);
+            }
         } catch (error) {
             console.error(error);
+        }
+    }
+
+    const fetchPosters = async (imdbID: string) => {
+        const query = `
+    {
+        title(id: "${imdbID}") {
+            posters{
+                url
+            }
+        }
+    }`;
+
+        try {
+            const response = await axios.post('https://graph.imdbapi.dev/v1', {
+                query: query
+            });
+            return response.data.data.title.posters[0].url;
+        } catch (error) {
+            console.error(error);
+            return '';
         }
     }
 
@@ -77,7 +117,12 @@ function App() {
                 <SearchBar searchFunction={fillTitlesWithNewData}/>
             </div>
             <div className="flex justify-around flex-wrap">
-                {foundTitles.sort((a, b) => b.year - a.year).map((title) => <Content title={title}/>)}
+                {foundTitles.length !== 0 ? foundTitles[foundTitles.length-1].poster ?
+                    foundTitles
+                        .filter((title, index, self) =>
+                            index === self.map(item => item.imdbID).lastIndexOf(title.imdbID))
+                        .map((title) => <Content title={title} key={title.imdbID}/>)
+                    : <></> : <></>}
             </div>
         </>
     )
