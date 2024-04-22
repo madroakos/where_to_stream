@@ -28,16 +28,16 @@ function App() {
 
     const [foundTitles, setFoundTitles] = useState<Title[]>([])
 
-    function fillTitlesWithNewData(search: string) {
-        fetchTitles(search);
+    function fillTitlesWithNewData(search: string, country: string) {
+        fetchTitles(search, country);
     }
 
-    const fetchTitles = async (search: string) => {
+    const fetchTitles = async (search: string, country: string) => {
         const request = {
             method: 'GET',
             url: 'https://streaming-availability.p.rapidapi.com/search/title',
             params: {
-                country: 'hu',
+                country: country,
                 title: search,
                 output_language: 'en',
                 show_type: 'all'
@@ -48,6 +48,7 @@ function App() {
             }
         };
 
+        console.log(country)
         try {
             const {data} = await axios.request(request);
             const titlesPromises = data.result.map(async (result: Result) => {
