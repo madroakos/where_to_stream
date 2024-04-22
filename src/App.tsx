@@ -48,7 +48,6 @@ function App() {
             }
         };
 
-        console.log(country)
         try {
             const {data} = await axios.request(request);
             const titlesPromises = data.result.map(async (result: Result) => {
@@ -80,7 +79,6 @@ function App() {
             try {
                 const titles = await Promise.all(titlesPromises);
                 setFoundTitles(titles);
-                console.log(titles);
             } catch (error) {
                 console.error(error);
             }

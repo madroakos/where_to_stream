@@ -19,7 +19,7 @@ const SearchBar: React.FC<SearchBarProps> = ({searchFunction}) => {
                 searchFunction(searchBar, selectedCountry);
             }}>
                 <select name="countries" id="countries" value={selectedCountry} onChange={handleCountryChange} defaultValue="hu"
-                        className="h-10 p-1 text-center"> {/* will change to be based on geolocation */}
+                        className="h-10 p-1 text-center">
                     <option value="hu">Hungary</option>
                     <option value="de">Germany</option>
                     <option value="us">USA</option>
