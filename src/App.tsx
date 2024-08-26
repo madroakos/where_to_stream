@@ -117,7 +117,7 @@ function App() {
 
     return (
         <>
-            <div className="flex flex-col items-center w-screen pt-12 mb-12 shadow-lg">
+            <div className="flex flex-col items-center w-screen pt-12 mb-12">
                 <h1 className="title font-bold text-center text-transparent bg-clip-text text-5xl sm:text-6xl mb-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 z-0">Where
                     to Stream</h1>
                 <div className="z-50 w-full flex justify-center">

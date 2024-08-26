@@ -14,7 +14,7 @@ const SearchBar: React.FC<SearchBarProps> = ({searchFunction, setLoadingFunction
     };
 
     return (
-        <div className="searchBar h-10 w-fit shadow-2xl mb-6">
+        <div className="searchBar h-10 w-fit shadow-2xl mb-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-xl">
             <form onSubmit={(e) => {
                 e.preventDefault();
                 setLoadingFunction(true);
