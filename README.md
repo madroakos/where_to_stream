@@ -13,7 +13,8 @@ Where To Stream is a web application that allows users to search for TV shows an
 - **🎨Clean UI:** Uses TailwindCSS and DaisyUI to provide a modern, clean, and consistent user interface.
 
 ## Screenshots
-![image](https://github.com/user-attachments/assets/24fd36d9-9deb-479d-914b-2174cc64ba8c)
+![image](https://github.com/user-attachments/assets/7e62562e-7245-466c-9de5-9d8007b0ccd1)
+
 
 
 
