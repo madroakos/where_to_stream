@@ -2,15 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    animation: fadein 0.5s;
+}
+
+.title {
+    animation: slideInForTitle 1s ease-out;
+}
+
 .movieCard {
-    animation: slideAndFadein 1s;
+    animation: slideAndFadeinForMovies 1s;
 }
 
 .skeletonCard {
     animation: fadein 1s;
 }
 
-@keyframes slideAndFadein {
+.searchBar {
+    animation: fadein 0.6s;
+}
+
+@keyframes slideAndFadeinForMovies {
     0% {
         opacity: 0;
         translate: 0 50%;
@@ -27,5 +39,19 @@
     }
     100% {
         opacity: 1;
+    }
+}
+
+@keyframes slideInForTitle {
+    0% {
+        opacity: 0;
+        translate: 0 300%;
+    }
+    66% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        translate: 0 0;
     }
 }
