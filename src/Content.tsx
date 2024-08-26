@@ -11,7 +11,7 @@ interface ContentProps {
 function Content(props: ContentProps) {
 
     return (
-        <div className="m-4 flex flex-col items-center justify-end">
+        <div className="movieCard m-4 flex flex-col items-center justify-end transition-opacity">
             <div className="w-56 self-start">
                 <img src={props.title.poster} alt={props.title.title} className="mb-2"/>
             </div>
