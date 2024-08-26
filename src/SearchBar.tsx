@@ -33,7 +33,7 @@ const SearchBar: React.FC<SearchBarProps> = ({searchFunction, setLoadingFunction
                     value={searchBar}
                     onChange={(e) => setSearchBar(e.target.value)}
                     placeholder="Search for a title..."
-                    className="h-10 focus:outline-none pl-2"
+                    className="h-10 focus:outline-none pl-4"
                 />
                 <button type="submit"
                         className="bg-transparent p-2 h-10 rounded-br rounded-tr">&#x1F50D;</button>
