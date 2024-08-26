@@ -2,6 +2,7 @@ import SearchBar from "./SearchBar.tsx";
 import Content from "./Content.tsx";
 import {useState} from "react";
 import axios from "axios";
+import MovieSkeleton from "./MovieSkeleton.tsx";
 
 function App() {
 
@@ -27,9 +28,11 @@ function App() {
     }
 
     const [foundTitles, setFoundTitles] = useState<Title[]>([])
+    const [loading, setLoading] = useState<boolean>(false);
 
     function fillTitlesWithNewData(search: string, country: string) {
-        fetchTitles(search, country);
+        setFoundTitles([]);
+        fetchTitles(search, country).then(() => setLoading(false));
     }
 
     const fetchTitles = async (search: string, country: string) => {
@@ -108,20 +111,26 @@ function App() {
         }
     }
 
+    function fillSkeletons() {
+        return Array.from({ length: 10 }, (_, i) => <MovieSkeleton key={i} />);
+    }
+
     return (
         <>
             <div className="flex flex-col items-center w-screen pt-12 mb-12 shadow-lg bg-gradient-to-b from-slate-50 via-slate-50 to-slate-200">
                 <h1 className="font-bold text-center text-transparent bg-clip-text text-6xl mb-12 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">Where
                     to Stream</h1>
-                <SearchBar searchFunction={fillTitlesWithNewData}/>
+                <SearchBar searchFunction={fillTitlesWithNewData} setLoadingFunction={setLoading}/>
             </div>
-            <div className="flex justify-around flex-wrap">
-                {foundTitles.length !== 0 ? foundTitles[foundTitles.length-1].poster ?
-                    foundTitles
-                        .filter((title, index, self) =>
-                            index === self.map(item => item.imdbID).lastIndexOf(title.imdbID))
-                        .map((title) => <Content title={title} key={title.imdbID}/>)
-                    : <></> : <></>}
+            <div className="flex justify-around flex-wrap gap-5">
+                {loading ? fillSkeletons() : (
+                    foundTitles.length !== 0 && foundTitles[foundTitles.length - 1].poster ? (
+                        foundTitles
+                            .filter((title, index, self) =>
+                                index === self.map(item => item.imdbID).lastIndexOf(title.imdbID))
+                            .map((title) => <Content title={title} key={title.imdbID} />)
+                    ) : <></>
+                )}
             </div>
         </>
     )
